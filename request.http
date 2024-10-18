@@ -1,15 +1,17 @@
+@baseUrl = http://localhost:3000
+
 ### get hello
-GET http://localhost:3000/tasks/hello
+GET {{baseUrl}}/tasks/hello
 
 ### get all tasks
-GET http://localhost:3000/tasks
+GET {{baseUrl}}/tasks
 
 ### get all task with filter
-GET http://localhost:3000/tasks?status=OPEN&search=nest
-# GET http://localhost:3000/tasks?status=IN_PROGRESS&limit=10&page=2
+GET {{baseUrl}}/tasks?status=OPEN&search=nest
+# GET {{baseUrl}}/tasks?status=IN_PROGRESS&limit=10&page=2
 
 ### create task
-POST http://localhost:3000/tasks
+POST {{baseUrl}}/tasks
 Content-Type: application/json
 
 {
@@ -18,10 +20,10 @@ Content-Type: application/json
 }
 
 ### Get task by id
-GET http://localhost:3000/tasks/76730410-3313-43e4-a36e-b24a5e3174e1
+GET {{baseUrl}}/tasks/76730410-3313-43e4-a36e-b24a5e3174e1
 
 ### Update task by id
-PATCH http://localhost:3000/tasks/04a045fd-a55b-4613-b40a-ba944839a2f6
+PATCH {{baseUrl}}/tasks/04a045fd-a55b-4613-b40a-ba944839a2f6
 Content-Type: application/json
 
 {
@@ -29,5 +31,48 @@ Content-Type: application/json
 }
 
 ### Delete task by id
-DELETE http://localhost:3000/tasks/77bd3f16-45f4-4e14-a233-0a1755c7de7c
+DELETE {{baseUrl}}/tasks/77bd3f16-45f4-4e14-a233-0a1755c7de7c
+
+
+
+############################################################################################
+####################################  SAMPLE  ##############################################
+############################################################################################
+# @name login
+POST {{baseUrl}}/api/login HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+name=foo&password=bar
+
+###
+
+@authToken = {{login.response.headers.X-AuthToken}}
+
+# @name createComment
+POST {{baseUrl}}/comments HTTP/1.1
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+    "content": "fake content"
+}
+
+###
+
+@commentId = {{createComment.response.body.$.id}}
+
+# @name getCreatedComment
+GET {{baseUrl}}/comments/{{commentId}} HTTP/1.1
+Authorization: {{authToken}}
+
+###
+
+# @name getReplies
+GET {{baseUrl}}/comments/{{commentId}}/replies HTTP/1.1
+Accept: application/xml
+
+###
+
+# @name getFirstReply
+GET {{baseUrl}}/comments/{{commentId}}/replies/{{getReplies.response.body.//reply[1]/@id}}
 
