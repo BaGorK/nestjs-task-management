@@ -1,2 +1,33 @@
 ### get hello
 GET http://localhost:3000/tasks/hello
+
+### get all tasks
+GET http://localhost:3000/tasks
+
+### get all task with filter
+GET http://localhost:3000/tasks?status=OPEN&search=nest
+# GET http://localhost:3000/tasks?status=IN_PROGRESS&limit=10&page=2
+
+### create task
+POST http://localhost:3000/tasks
+Content-Type: application/json
+
+{
+  "title": "nestjs",
+  "description": "this is the first task"
+}
+
+### Get task by id
+GET http://localhost:3000/tasks/76730410-3313-43e4-a36e-b24a5e3174e1
+
+### Update task by id
+PATCH http://localhost:3000/tasks/04a045fd-a55b-4613-b40a-ba944839a2f6
+Content-Type: application/json
+
+{
+  "status": "IN_PROGRESS"
+}
+
+### Delete task by id
+DELETE http://localhost:3000/tasks/77bd3f16-45f4-4e14-a233-0a1755c7de7c
+
