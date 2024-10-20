@@ -19,11 +19,13 @@ export class TasksService {
     return 'Hello World!';
   }
 
-  async getAllTasks(filterDto: GetTaskFilterDto) {
+  async getAllTasks(filterDto: GetTaskFilterDto, user: User) {
     this.logger.debug('get all tasks route');
     const { search, status } = filterDto;
 
     const query = this.taskRepository.createQueryBuilder('task');
+
+    query.where({ user });
 
     if (status) {
       query.andWhere('task.status = :status', { status });
@@ -31,7 +33,7 @@ export class TasksService {
 
     if (search) {
       query.andWhere(
-        'task.title LIKE :search OR task.description LIKE :search',
+        '(task.title LIKE :search OR task.description LIKE :search)',
         { search: `%${search}%` },
       );
     }

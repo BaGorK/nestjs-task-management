@@ -30,8 +30,8 @@ export class TasksController {
   }
 
   @Get()
-  getTasks(@Query() filterDto: GetTaskFilterDto) {
-    return this.tasksService.getAllTasks(filterDto);
+  getTasks(@Query() filterDto: GetTaskFilterDto, @GetUser() user: User) {
+    return this.tasksService.getAllTasks(filterDto, user);
   }
 
   @Post()
