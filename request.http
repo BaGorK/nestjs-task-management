@@ -3,11 +3,10 @@
 ### get hello
 GET {{baseUrl}}/tasks/hello
 
-### get all tasks
-GET {{baseUrl}}/tasks
-
-### get all task with filter
-GET {{baseUrl}}/tasks?status=OPEN&search=nest
+### get all task
+# GET {{baseUrl}}/tasks
+GET {{baseUrl}}/tasks?status=OPEN
+# GET {{baseUrl}}/tasks?search=nest
 # GET {{baseUrl}}/tasks?status=IN_PROGRESS&limit=10&page=2
 
 ### create task
@@ -15,15 +14,18 @@ POST {{baseUrl}}/tasks
 Content-Type: application/json
 
 {
-  "title": "nestjs",
+//  "title": "learn nest js",
+//  "title": "learn backend development",
+//  "title": "learn frontend development",
+  "title": "learn full stack development 2",
   "description": "this is the first task"
 }
 
 ### Get task by id
-GET {{baseUrl}}/tasks/76730410-3313-43e4-a36e-b24a5e3174e1
+GET {{baseUrl}}/tasks/96e78492-fb75-4382-831c-7dc8dd790fc5
 
 ### Update task by id
-PATCH {{baseUrl}}/tasks/04a045fd-a55b-4613-b40a-ba944839a2f6
+PATCH {{baseUrl}}/tasks/66defb0a-694c-4067-8e0a-f21db106ce31
 Content-Type: application/json
 
 {
@@ -31,7 +33,7 @@ Content-Type: application/json
 }
 
 ### Delete task by id
-DELETE {{baseUrl}}/tasks/77bd3f16-45f4-4e14-a233-0a1755c7de7c
+DELETE {{baseUrl}}/tasks/66defb0a-694c-4067-8e0a-f21db106ce31
 
 
 

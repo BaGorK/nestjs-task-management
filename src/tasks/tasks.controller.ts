@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Patch,
   Post,
@@ -24,11 +25,7 @@ export class TasksController {
 
   @Get()
   getTasks(@Query() filterDto: GetTaskFilterDto) {
-    if (Object.keys(filterDto).length) {
-      return this.tasksService.getTasksWithFilter(filterDto);
-    } else {
-      return this.tasksService.getAllTasks();
-    }
+    return this.tasksService.getAllTasks(filterDto);
   }
 
   @Post()
@@ -50,6 +47,7 @@ export class TasksController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   deleteTask(@Param('id') id: string) {
     return this.tasksService.deleteTask(id);
   }
