@@ -40,21 +40,26 @@ export class TasksController {
   }
 
   @Get(':id')
-  getTask(@Param('id', ParseUUIDPipe) id: string) {
-    return this.tasksService.getTask(id);
+  getTask(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: User) {
+    return this.tasksService.getTask(id, user);
   }
 
   @Patch(':id')
   updateTaskStatus(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateTaskStatusDto: { status: TaskStatus },
+    @GetUser() user: User,
   ) {
-    return this.tasksService.updateTaskStatus(id, updateTaskStatusDto.status);
+    return this.tasksService.updateTaskStatus(
+      id,
+      updateTaskStatusDto.status,
+      user,
+    );
   }
 
   @Delete(':id')
   @HttpCode(204)
-  deleteTask(@Param('id', ParseUUIDPipe) id: string) {
-    return this.tasksService.deleteTask(id);
+  deleteTask(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: User) {
+    return this.tasksService.deleteTask(id, user);
   }
 }

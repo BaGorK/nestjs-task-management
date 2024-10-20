@@ -33,7 +33,7 @@ export class TasksService {
 
     if (search) {
       query.andWhere(
-        '(task.title LIKE :search OR task.description LIKE :search)',
+        '(LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search))',
         { search: `%${search}%` },
       );
     }
@@ -57,19 +57,19 @@ export class TasksService {
     return task;
   }
 
-  async getTask(id: string) {
+  async getTask(id: string, user: User) {
     this.logger.debug(`get task by id: ${id}`);
-    const task = await this.taskRepository.findOneBy({ id });
+    const task = await this.taskRepository.findOneBy({ id, user });
 
     if (!task) throw new NotFoundException(`Task with ID "${id}" not found`);
 
     return task;
   }
 
-  async updateTaskStatus(id: string, status: TaskStatus) {
+  async updateTaskStatus(id: string, status: TaskStatus, user: User) {
     this.logger.debug(`update task status by id: ${id}`);
 
-    const task = await this.getTask(id);
+    const task = await this.getTask(id, user);
 
     const updatedTask = { ...task, status };
 
@@ -78,10 +78,10 @@ export class TasksService {
     return updatedTask;
   }
 
-  async deleteTask(id: string) {
+  async deleteTask(id: string, user: User) {
     this.logger.debug(`delete task by id: ${id}`);
 
-    const task = await this.getTask(id);
+    const task = await this.getTask(id, user);
 
     await this.taskRepository.remove(task);
 
