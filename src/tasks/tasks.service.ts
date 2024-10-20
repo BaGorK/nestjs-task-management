@@ -42,7 +42,7 @@ export class TasksService {
   async createTask(createTaskDto: CreateTaskDto) {
     this.logger.debug('create task route');
     const { title, description } = createTaskDto;
-    const task = await this.taskRepository.create({
+    const task = this.taskRepository.create({
       title,
       description,
       status: TaskStatus.OPEN,

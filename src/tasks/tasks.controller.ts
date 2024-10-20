@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
   Query,
@@ -34,13 +35,13 @@ export class TasksController {
   }
 
   @Get(':id')
-  getTask(@Param('id') id: string) {
+  getTask(@Param('id', ParseUUIDPipe) id: string) {
     return this.tasksService.getTask(id);
   }
 
   @Patch(':id')
   updateTaskStatus(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() updateTaskStatusDto: { status: TaskStatus },
   ) {
     return this.tasksService.updateTaskStatus(id, updateTaskStatusDto.status);
@@ -48,7 +49,7 @@ export class TasksController {
 
   @Delete(':id')
   @HttpCode(204)
-  deleteTask(@Param('id') id: string) {
+  deleteTask(@Param('id', ParseUUIDPipe) id: string) {
     return this.tasksService.deleteTask(id);
   }
 }
