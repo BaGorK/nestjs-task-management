@@ -3,6 +3,9 @@
 ### get hello
 GET {{baseUrl}}/tasks/hello
 
+### test
+POST {{baseUrl}}/auth/test
+
 ### get all task
 # GET {{baseUrl}}/tasks
 GET {{baseUrl}}/tasks?status=OPEN
